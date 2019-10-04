@@ -25,9 +25,9 @@ def hex_to_bin(hex_string):
 def hex_to_ch(hex_string, printing="d"):
     """Translates hex bytes to ASCII.
 
-	Not truly a base translation but helpful for human understanding.
-	Options for control characters: [d]ot, [v]erbose, or [s]pace.
-	"""
+    Not truly a base translation but helpful for human understanding.
+    Options for control characters: [d]ot, [v]erbose, or [s]pace.
+    """
 
     output = []
     for chi in range(len(hex_string) // 2):
@@ -54,6 +54,6 @@ def hex_to_ch(hex_string, printing="d"):
 def parse(string, option=infix, output=x):
     """Parses a string expression for calculation.
 
-	Options to be implemented: infix/rpn.
-	Outputs are formats: hex/bin/dec.
-	"""
+    Options to be implemented: infix/rpn.
+    Outputs are formats: hex/bin/dec.
+    """
