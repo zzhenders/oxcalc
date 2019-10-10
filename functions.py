@@ -3,6 +3,17 @@ from constants import X2B_MAP, B2X_MAP, UNPRINTABLE_MAP
 # Base translation functions
 
 
+def bin_to_dec(binary_string):
+    collapsed = reversed(''.join(binary_string.split(' ')))
+    decimal, power = 0, 1
+
+    for bit in collapsed:
+        decimal += int(bit) * power
+        power *= 2
+
+    return decimal
+
+
 def dec_to_bin(decimal_string):
     return f"{int(decimal_string):b}"
 
@@ -46,14 +57,3 @@ def hex_to_ch(hex_string, printing="d"):
                 raise Exception
         output.append(char)
     return "".join(output)
-
-
-# Parser
-
-
-def parse(string, option=infix, output=x):
-    """Parses a string expression for calculation.
-
-    Options to be implemented: infix/rpn.
-    Outputs are formats: hex/bin/dec.
-    """
