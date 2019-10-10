@@ -4,7 +4,7 @@ from constants import X2B_MAP, B2X_MAP, UNPRINTABLE_MAP
 
 
 def bin_to_dec(binary_string):
-    collapsed = reversed(''.join(binary_string.split(' ')))
+    collapsed = reversed("".join(binary_string.split(" ")))
     decimal, power = 0, 1
 
     for bit in collapsed:
@@ -12,6 +12,17 @@ def bin_to_dec(binary_string):
         power *= 2
 
     return decimal
+
+
+def bin_to_hex(binary_string):
+    collapsed = "".join(binary_string.split(" "))
+    # This next line provides 0 to 3 leading zeroes to binary string.
+    collapsed = ("0" * ((4 - len(collapsed) % 4) % 4)) + collapsed
+
+    output = []
+    for i in range(len(collapsed) // 4):
+        output.append(B2X_MAP.get(collapsed[i * 4 : (i + 1) * 4], ""))
+    return "".join(output)
 
 
 def dec_to_bin(decimal_string):
