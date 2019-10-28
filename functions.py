@@ -4,10 +4,9 @@ from constants import X2B_MAP, B2X_MAP, UNPRINTABLE_MAP
 
 
 def bin_to_dec(binary_string):
-    collapsed = reversed("".join(binary_string.split(" ")))
     decimal, power = 0, 1
 
-    for bit in collapsed:
+    for bit in binary_string:
         decimal += int(bit) * power
         power *= 2
 
@@ -15,13 +14,13 @@ def bin_to_dec(binary_string):
 
 
 def bin_to_hex(binary_string):
-    collapsed = "".join(binary_string.split(" "))
     # This next line provides 0 to 3 leading zeroes to binary string.
-    collapsed = ("0" * ((4 - len(collapsed) % 4) % 4)) + collapsed
-
+    binary_string = ("0" * ((4 - len(binary_string) % 4) % 4)) + binary_string
     output = []
-    for i in range(len(collapsed) // 4):
-        output.append(B2X_MAP.get(collapsed[i * 4 : (i + 1) * 4], ""))
+
+    for i in range(len(binary_string) // 4):
+        output.append(B2X_MAP.get(binary_string[i * 4 : (i + 1) * 4], ""))
+
     return "".join(output)
 
 
@@ -39,9 +38,11 @@ def hex_to_dec(hex_string):
 
 def hex_to_bin(hex_string):
     output = []
+
     for ch in hex_string:
         output.append(X2B_MAP.get(ch, ""))
-    return " ".join(output)
+
+    return "".join(output)
 
 
 def hex_to_ch(hex_string, printing="d"):
