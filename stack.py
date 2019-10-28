@@ -1,3 +1,4 @@
+from functions import bin_to_hex, bin_to_dec
 from functions import dec_to_bin, dec_to_hex
 from functions import hex_to_bin, hex_to_dec, hex_to_ch
 
@@ -28,17 +29,21 @@ class Stack(object):
     def to_number(self, str_number):
         if str_number[0] == "x":
             return int(hex_to_dec(str_number[1:]))
-        if str_number[0] == "b":
+        elif str_number[0] == "b":
             return int(bin_to_dec(str_number[1:]))
+        elif str_number[0] == "d":
+            return int(str_number[1:])
+        else:
+            return int(str_number)
 
     def binary_args(self):
-        return (self.to_number(self.pop()), self.to_number(self.pop()))
+        t = (self.to_number(self.pop()), self.to_number(self.pop()))
+        return t
 
     def unary_arg(self):
         return self.to_number(self.pop())
 
-    def parse(self, in_string, base):
-        items = in_string.split(" ").reverse()
+    def parse(self, expression, base):
 
         operators = {
             "+": lambda a, b: a + b,
@@ -54,10 +59,21 @@ class Stack(object):
             ">": lambda a, b: a >> b,
         }
 
-        for item in items:
+        for item in expression:
             if item in "+-*/%&|^><":
-                self.push(operators[item](self.binary_args()))
+                b, a = self.binary_args()
+                self.push(operators[item](a, b))
             elif item in "~":
-                self.push(operators[item](self.unary_arg()))
+                a = self.unary_arg()
+                self.push(operators[item](a))
             else:
-                self.stack.push(item)
+                self.push(item)
+
+        if base == "b":
+            return dec_to_bin(self.pop())
+        elif base == "c":
+            return hex_to_ch(dec_to_hex(self.pop()))
+        elif base == "d":
+            return self.pop()
+        elif base == "x":
+            return dec_to_hex(self.pop())
